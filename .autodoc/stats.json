@@ -1,6 +1,8 @@
 {
-    "total_sessions": 0,
-    "days_logged": [],
+    "total_sessions": 1,
+    "days_logged": [
+        "2026-10-10"
+    ],
     "total_minutes": 0,
-    "last_session": "N/A"
+    "last_session": "2026-10-10"
 }
