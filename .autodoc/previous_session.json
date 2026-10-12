@@ -1,3 +1,3 @@
 {
-  "where_left_off": "OPNsense is at the shell prompt after a DHCP packet capture showed repeated IPv4 Discover requests on WAN em1 without a visible DHCP Offer, the next session should investigate the VMware DHCP response path, obtain and verify a WAN IPv4 lease and default route, validate upstream connectivity, then connect a test client to VMnet2 and test LAN DHCP and firewall behavior."
+  "where_left_off": "WAN em1 is repeatedly transmitting DHCP Discover packets without an observed DHCP Offer, /tmp/wan-dhcp.pcap was being captured on em1 and must be finalized with Ctrl+C before transfer to Windows, next session should analyze the PCAP and choose the next diagnostic test based on its contents"
 }
