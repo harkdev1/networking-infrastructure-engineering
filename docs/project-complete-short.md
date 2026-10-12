@@ -3,48 +3,36 @@
 Status: In progress
 
 ## Project story
-This project is currently **In progress**.
+## Project Summary: Networking-Infrastructure-Engineering
 
----
+### 1. Project Story
+This project is focused on establishing a robust, segmented enterprise-style virtual network within a VMware homelab environment, with OPNsense configured as the core perimeter firewall and router. The foundational work has included the successful installation and initial configuration of OPNsense 26.7, setting up its internal LAN gateway (192.168.20.1/24), and defining a DHCP pool for future lab clients.
 
-## 1. Project story
+A primary challenge encountered is a persistent WAN DHCP failure on the OPNsense virtual machine, preventing it from obtaining an IPv4 lease and thus lacking upstream internet connectivity. Initial systematic troubleshooting involved verifying OPNsense's client behavior, inspecting VMware's virtual network configurations (specifically VMnet8 NAT and DHCP services), and checking host-side network settings. Despite these efforts, DHCP Discover requests from OPNsense are not receiving visible offers, and limited visibility into the DHCP negotiation process has hindered fault isolation. The project is currently pivoting towards a more detailed, evidence-based approach, utilizing packet-level analysis with Wireshark and establishing more granular observation points to definitively pinpoint the root cause of the WAN connectivity issue. This ongoing work aims to resolve the foundational networking challenge before proceeding with further network segmentation and service deployment.
 
-This ongoing project, 'Networking-Infrastructure-Engineering', focuses on building a robust, segmented enterprise-style virtual network within a VMware homelab environment. The foundational work has begun with the installation and initial configuration of OPNsense 26.7, serving as the core firewall and router for a new, isolated network segment. The objective is to apply practical networking concepts to establish a secure and well-defined network architecture, moving from initial setup to real-world troubleshooting of connectivity challenges. The process emphasizes methodical engineering, documentation, and continuous learning from encountered issues, ensuring a solid understanding of network operations from the ground up.
+### 2. Key Achievements
+*   Successfully installed and performed initial configuration of OPNsense 26.7 as the intended network perimeter firewall for an isolated enterprise-style virtual network.
+*   Configured the OPNsense LAN interface (192.168.20.1/24) and established a DHCP pool for future lab clients, laying the groundwork for internal network services.
+*   Systematically investigated a persistent WAN DHCP failure, which included verifying OPNsense WAN interface configuration, confirming VMware VMnet8 NAT and DHCP settings, and checking the operational status of VMware's DHCP and NAT services.
+*   Initiated diagnostic packet captures (PCAP files) for subsequent detailed Wireshark analysis, marking a strategic shift from configuration checks to evidence-based packet-level fault isolation.
 
-## 2. Key achievements
+### 3. Lessons Learned
+*   **Importance of Granular Observation Points:** Initial troubleshooting efforts revealed that limited visibility into the DHCP negotiation process (e.g., whether DHCP Discover messages reached the VMware DHCP server) hindered fault isolation. Establishing more precise observation points for packet capture is critical for effective diagnosis.
+*   **Recognizing Diminishing Returns:** Repeated configuration checks without new data or insights quickly yield diminishing returns. A methodical pivot to deeper, evidence-based analysis (like Wireshark) is crucial when initial verification steps prove inconclusive.
+*   **Distinguishing Verified Findings from Assumptions:** It is essential to clearly delineate confirmed facts from assumptions during troubleshooting to avoid repeating checks on known-good components or chasing non-existent problems.
 
-*   **Firewall Foundation Established:** Successfully installed and initially configured OPNsense 26.7 as the virtual network's gateway, demonstrating proficiency in setting up a professional-grade firewall distribution.
-*   **Isolated Network Segment Defined:** Created and assigned the LAN interface to an isolated virtual network (VMnet2) with a defined subnet (192.168.20.0/24) and DHCP pool, laying the groundwork for future lab clients.
-*   **Structured Troubleshooting Applied:** Demonstrated a methodical approach to diagnosing a critical WAN connectivity issue by inspecting interface status, routing tables, DHCP lease states, and performing packet capture (tcpdump).
-*   **Problem Identification & Documentation:** Clearly identified the core issue—repeated IPv4 DHCP Discover requests on the WAN without a visible DHCP Offer—and meticulously documented the unresolved problem with a targeted troubleshooting plan for subsequent sessions.
+### 4. Next Steps
+*   Perform a detailed Wireshark analysis of the captured PCAP file to thoroughly examine DHCP negotiation packets and pinpoint communication breakdowns between OPNsense and the VMware DHCP server.
+*   Establish more granular and effective observation points for packet capture, potentially directly on the VMnet8 interface within the host or within the guest VM itself, to ensure comprehensive visibility of DHCP Discover requests reaching the VMware DHCP server and its subsequent responses.
+*   Based on the packet-level analysis, systematically isolate the fault to either the OPNsense client configuration, the VMware virtual network's routing/bridging, or the VMware DHCP service itself.
+*   Resolve the WAN DHCP failure to restore upstream connectivity for OPNsense, enabling the progression to further network segmentation and service deployment within the homelab environment.
 
-## 3. Lessons learned
-
-*   **Pre-configuration Inventory is Critical:** The importance of thoroughly inventorying existing virtual network configurations (VMware networks, DHCP pools, gateway settings, and service status) *before* introducing new components to prevent delays and misconfigurations.
-*   **Distinguish Link State from IP Addressing:** Recognized the need to differentiate between an active physical link and successful IP address assignment, underscoring that link status alone does not guarantee full network connectivity.
-*   **Leverage Packet-Level Evidence:** Highlighted the value of moving to packet capture (tcpdump) for in-depth diagnostics when higher-level troubleshooting steps (interface inspection, routing tables) do not reveal the root cause of connectivity issues.
-*   **Accurate Reporting of Unresolved Issues:** Emphasized the professional practice of documenting genuine challenges and incomplete tasks, rather than implying completion for work still in progress, fostering transparency and a realistic view of project status.
-
-## 4. Next steps
-
-The immediate next steps are focused on resolving the critical WAN connectivity issue and validating the foundational network services:
-
-*   **Resolve WAN DHCP Issue:** Systematically investigate and resolve why OPNsense's WAN interface (`em1`) is not receiving an IPv4 DHCP Offer from the VMware NAT service. This includes validating VMware's NAT and DHCP service configurations and behavior.
-*   **Establish Upstream Connectivity:** Secure a valid WAN IPv4 lease and confirm the default route to enable upstream internet connectivity for the OPNsense firewall.
-*   **Validate LAN Functionality:** Fully test OPNsense's LAN gateway (192.168.20.1/24) and DHCP server functionality on VMnet2.
-*   **Integrate Test Client:** Connect a test client to the newly established isolated lab subnet and validate permitted and blocked traffic through the OPNsense firewall.
-*   **Comprehensive Documentation:** Finalize the network topology diagram and detailed session documentation, including screenshots and packet capture evidence at key milestones and configuration decisions.
-
-## 5. Proof points
-
-*   **Screenshots:**
-    *   `OPNsense Live Boot`: Visual evidence of the initial firewall installation.
-    *   `Passive activity capture` (multiple instances): Demonstrates active engagement and focused work during problem-solving sessions.
-*   **Log Entries (2026-10-11):**
-    *   "Installed and configured OPNsense 26.7 as the foundation for an isolated enterprise-style virtual network..."
-    *   "Investigated missing WAN IPv4 connectivity through interface inspection, routing-table analysis, DHCP lease inspection, and packet capture..."
-    *   "Identified repeated DHCP Discover requests without a visible DHCP Offer, documented the unresolved WAN DHCP issue and established a targeted troubleshooting plan..."
-    *   The detailed "Issues Encountered" and "Next Steps" sections explicitly reflect the encountered challenges and the plan to address them, validating the ongoing nature of the work and the structured problem-solving approach.
+### 5. Proof Points
+*   **Screenshot: OPNsense Live Boot** (2026-10-11): Visually demonstrates the successful initial boot and installation phase of the OPNsense firewall.
+*   **Screenshot: VMware DHCP Investigation** (2026-10-12): Provides visual context of the troubleshooting environment, indicating active investigation into the WAN DHCP issue.
+*   **Log Entry 2026-10-11 - Summary:** "Installed and configured OPNsense 26.7 as the foundation... established the LAN gateway at 192.168.20.1/24... investigated missing WAN IPv4 connectivity... identified repeated DHCP Discover requests without a visible DHCP Offer."
+*   **Log Entry 2026-10-12 - Tasks Completed:** "Investigated the OPNsense WAN DHCP failure... Verified the OPNsense WAN interface (em1) configuration... Confirmed the VMware VMnet8 NAT and DHCP configuration... Initiated a PCAP capture for subsequent Wireshark analysis."
+*   **Log Entry 2026-10-12 - Next Steps:** "Perform a detailed Wireshark analysis of the captured PCAP file... Establish a more granular and effective observation point... Systematically isolate the fault to either the OPNsense client, the VMware virtual network's routing/bridging, or the VMware DHCP service itself."
 
 ## What we shipped
 - The project was completed with a clear objective, technical execution, and proof captured in the logs.
@@ -58,8 +46,8 @@ This screenshot captures the most important project evidence for the current pha
 ### Highlight: Activity_2026 10 11_140856
 ![Activity_2026 10 11_140856](../screenshots/activity_2026-10-11_140856.jpg)
 This screenshot captures the most important project evidence for the current phase, showing the main state, artifact, or operational view being reviewed. It highlights the key detail the viewer should notice in this stage of the project.
-### Highlight: OPNsense Live Boot
-![OPNsense Live Boot](../screenshots/2026-10-11_131714_opnsense-live-boot.png)
+### Highlight: VMware DHCP Investigation
+![VMware DHCP Investigation](../screenshots/2026-10-12_043617_vmware-dhcp-investigation.png)
 This screenshot captures the most important project evidence for the current phase, showing the main state, artifact, or operational view being reviewed. It highlights the key detail the viewer should notice in this stage of the project.
 
 

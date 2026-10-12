@@ -3,6 +3,412 @@
 Status: In progress
 
 ## Project story
+## Project Summary: Networking-Infrastructure-Engineering
+
+### 1. Project Story
+This project is focused on establishing a robust, segmented enterprise-style virtual network within a VMware homelab environment, with OPNsense configured as the core perimeter firewall and router. The foundational work has included the successful installation and initial configuration of OPNsense 26.7, setting up its internal LAN gateway (192.168.20.1/24), and defining a DHCP pool for future lab clients.
+
+A primary challenge encountered is a persistent WAN DHCP failure on the OPNsense virtual machine, preventing it from obtaining an IPv4 lease and thus lacking upstream internet connectivity. Initial systematic troubleshooting involved verifying OPNsense's client behavior, inspecting VMware's virtual network configurations (specifically VMnet8 NAT and DHCP services), and checking host-side network settings. Despite these efforts, DHCP Discover requests from OPNsense are not receiving visible offers, and limited visibility into the DHCP negotiation process has hindered fault isolation. The project is currently pivoting towards a more detailed, evidence-based approach, utilizing packet-level analysis with Wireshark and establishing more granular observation points to definitively pinpoint the root cause of the WAN connectivity issue. This ongoing work aims to resolve the foundational networking challenge before proceeding with further network segmentation and service deployment.
+
+### 2. Key Achievements
+*   Successfully installed and performed initial configuration of OPNsense 26.7 as the intended network perimeter firewall for an isolated enterprise-style virtual network.
+*   Configured the OPNsense LAN interface (192.168.20.1/24) and established a DHCP pool for future lab clients, laying the groundwork for internal network services.
+*   Systematically investigated a persistent WAN DHCP failure, which included verifying OPNsense WAN interface configuration, confirming VMware VMnet8 NAT and DHCP settings, and checking the operational status of VMware's DHCP and NAT services.
+*   Initiated diagnostic packet captures (PCAP files) for subsequent detailed Wireshark analysis, marking a strategic shift from configuration checks to evidence-based packet-level fault isolation.
+
+### 3. Lessons Learned
+*   **Importance of Granular Observation Points:** Initial troubleshooting efforts revealed that limited visibility into the DHCP negotiation process (e.g., whether DHCP Discover messages reached the VMware DHCP server) hindered fault isolation. Establishing more precise observation points for packet capture is critical for effective diagnosis.
+*   **Recognizing Diminishing Returns:** Repeated configuration checks without new data or insights quickly yield diminishing returns. A methodical pivot to deeper, evidence-based analysis (like Wireshark) is crucial when initial verification steps prove inconclusive.
+*   **Distinguishing Verified Findings from Assumptions:** It is essential to clearly delineate confirmed facts from assumptions during troubleshooting to avoid repeating checks on known-good components or chasing non-existent problems.
+
+### 4. Next Steps
+*   Perform a detailed Wireshark analysis of the captured PCAP file to thoroughly examine DHCP negotiation packets and pinpoint communication breakdowns between OPNsense and the VMware DHCP server.
+*   Establish more granular and effective observation points for packet capture, potentially directly on the VMnet8 interface within the host or within the guest VM itself, to ensure comprehensive visibility of DHCP Discover requests reaching the VMware DHCP server and its subsequent responses.
+*   Based on the packet-level analysis, systematically isolate the fault to either the OPNsense client configuration, the VMware virtual network's routing/bridging, or the VMware DHCP service itself.
+*   Resolve the WAN DHCP failure to restore upstream connectivity for OPNsense, enabling the progression to further network segmentation and service deployment within the homelab environment.
+
+### 5. Proof Points
+*   **Screenshot: OPNsense Live Boot** (2026-10-11): Visually demonstrates the successful initial boot and installation phase of the OPNsense firewall.
+*   **Screenshot: VMware DHCP Investigation** (2026-10-12): Provides visual context of the troubleshooting environment, indicating active investigation into the WAN DHCP issue.
+*   **Log Entry 2026-10-11 - Summary:** "Installed and configured OPNsense 26.7 as the foundation... established the LAN gateway at 192.168.20.1/24... investigated missing WAN IPv4 connectivity... identified repeated DHCP Discover requests without a visible DHCP Offer."
+*   **Log Entry 2026-10-12 - Tasks Completed:** "Investigated the OPNsense WAN DHCP failure... Verified the OPNsense WAN interface (em1) configuration... Confirmed the VMware VMnet8 NAT and DHCP configuration... Initiated a PCAP capture for subsequent Wireshark analysis."
+*   **Log Entry 2026-10-12 - Next Steps:** "Perform a detailed Wireshark analysis of the captured PCAP file... Establish a more granular and effective observation point... Systematically isolate the fault to either the OPNsense client, the VMware virtual network's routing/bridging, or the VMware DHCP service itself."
+
+## Project timeline
+### 2026-10-12 • 04:27 to 05:39
+- Goal
+Investigate and troubleshoot the missing IPv4 DHCP lease on the OPNsense WAN interface, identify the cause of the missing DHCP Offer if possible, restore upstream connectivity, validate the default route, document findings and remaining blockers.
+
+- Definition of Done
+Confirm the OPNsense WAN interface and VMware virtual network configuration, determine why DHCP Discover requests are not receiving a visible Offer or document the most likely fault boundary, obtain a WAN IPv4 lease and verify the default route if resolved, capture diagnostic evidence and record a reproducible troubleshooting handoff.
+
+- Goal Achieved
+❌ No
+
+Summary:
+This documentation outlines the initial phase of troubleshooting a persistent WAN DHCP failure experienced by an OPNsense virtual machine within a VMware environment. Despite a systematic approach to verifying both the OPNsense client's behavior and the VMware virtual network configuration, the issue remains unresolved. Limited visibility into the DHCP negotiation process has hindered fault isolation. Recognizing diminishing returns from further configuration checks, the focus is now shifting to evidence-based, packet-level analysis to pinpoint the root cause.
+
+Tasks Completed:
+*   Investigated the OPNsense WAN DHCP failure.
+*   Verified the OPNsense WAN interface (em1) configuration and confirmed repeated DHCP Discover transmissions.
+*   Confirmed the VMware VMnet8 NAT and DHCP configuration.
+*   Checked the operational status of the VMware DHCP and NAT services.
+*   Restarted the VMware DHCP service without restoring existing leases.
+*   Examined Windows DHCP event channels on the host.
+*   Reviewed VMware DHCP lease records for any relevant entries.
+*   Initiated a PCAP capture for subsequent Wireshark analysis.
+
+Issues Encountered:
+*   Repeated configuration checks did not succeed in isolating the fault.
+*   Limited visibility into whether the VMware DHCP server was receiving OPNsense DHCP broadcast messages.
+*   Initial host-side packet captures proved inconclusive in diagnosing the problem.
+*   The WAN DHCP failure for OPNsense persists.
+*   A tendency to repeat verification steps without establishing new observation points or distinguishing clearly between confirmed findings and assumptions.
+
+Next Steps:
+*   Perform a detailed Wireshark analysis of the captured PCAP file to thoroughly examine DHCP negotiation packets and identify communication breakdowns.
+*   Establish a more granular and effective observation point, potentially capturing traffic directly on the VMnet8 interface within the host, or within the guest VM itself (if feasible), to ensure visibility of DHCP Discover requests reaching the VMware DHCP server and its subsequent responses.
+*   Based on the packet-level analysis, systematically isolate the fault to either the OPNsense client, the VMware virtual network's routing/bridging, or the VMware DHCP service itself.
+
+Notes:
+
+- Working Story
+Systematic troubleshooting of a virtual networking failure, evidence-based fault isolation, verification of DHCP client behavior and virtual network configuration, recognition of diminishing returns and a plan to use packet-level analysis for the next diagnostic step
+
+- Friction and AI Gaps
+Repeated configuration checks without isolating the fault, limited visibility into whether VMware DHCP receives OPNsense broadcasts, inconclusive host-side packet captures, unresolved WAN DHCP failure
+
+- What the AI Missed
+Repeated checks of settings and service status already verified, insufficiently distinguished confirmed findings from assumptions, did not establish a new observation point before recommending further troubleshooting
+
+- AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-12 05:41:25
+Reviewer Notes: 
+
+- Duration
+72 minutes (Planned: 60 minutes)
+
+- Notes
+WAN DHCP failure remains unresolved, VMware VMnet8 configuration matches the intended subnet and gateway, existing VMware DHCP lease file contains only an old NS-DC01 lease, saved PCAP pending analysis in Wireshark
+### 2026-10-11 • 11:44 to 15:04
+- Goal
+Establish the baseline of the existing VMware homelab network, identify virtual network connections and IP addressing, examine routing and DNS behavior within the lab, identify one genuine networking issue or discrepancy, and establish the foundation for the segmented enterprise network.
+
+- Definition of Done
+Existing virtual network topology documented, NS-DC01 network configuration identified, IP addressing and routing understood, DNS resolution tested, connectivity between relevant lab systems assessed, one real issue investigated if present, findings and next steps documented.
+
+- Goal Achieved
+❌ No
+
+
+Summary:
+Installed and configured OPNsense 26.7 as the foundation for an isolated enterprise-style virtual network, established the LAN gateway at 192.168.20.1/24 and configured the DHCP pool for future lab clients, assigned WAN and LAN interfaces and verified VMware NAT addressing, investigated missing WAN IPv4 connectivity through interface inspection, routing-table analysis, DHCP lease inspection, and packet capture, identified repeated DHCP Discover requests without a visible DHCP Offer, documented the unresolved WAN DHCP issue and established a targeted troubleshooting plan for the next session.
+
+Tasks Completed:
+Installed OPNsense 26.7 on a dedicated virtual machine, configured WAN and LAN interface assignments, created the isolated VMnet2 network using 192.168.20.0/24, assigned the LAN gateway 192.168.20.1/24, configured the LAN DHCP pool from 192.168.20.100 to 192.168.20.199, verified VMware VMnet8 NAT subnet and gateway settings, inspected VMware DHCP pool configuration and service status, inspected OPNsense interface status and routing tables, examined DHCP lease state, captured WAN IPv4 DHCP traffic with tcpdump, identified repeated DHCP Discover requests without a visible DHCP Offer, documented the unresolved WAN connectivity issue and next troubleshooting steps.
+
+Issues Encountered:
+WAN failed to obtain an IPv4 address through DHCP despite the virtual interface reporting an active link, repeated DHCP Discover requests were captured without a visible DHCP Offer, the WAN DHCP lease file was empty, the default IPv4 route was absent, the LAN virtual adapter was initially attached to VMnet0 instead of the intended VMnet2 and required correction, initial troubleshooting was slowed by incomplete inventory of the existing virtual network configuration, DHCPv6 log messages initially complicated interpretation of the IPv4 DHCP issue, Gemini AI generation encountered a temporary 503 service availability error and required manual documentation.
+
+Next Steps:
+Inventory and validate the existing VMware virtual network configuration before making further changes, investigate why OPNsense WAN (`em1`) sends IPv4 DHCP Discover requests without receiving a visible DHCP Offer, verify VMware NAT and DHCP service behavior, obtain a valid WAN IPv4 lease and confirm the default route, test upstream connectivity, verify OPNsense LAN gateway and DHCP functionality on VMnet2, connect a test client to the isolated lab subnet, validate permitted and blocked traffic through the firewall, capture screenshots and packet evidence at key milestones, document troubleshooting findings and configuration decisions, finalize the network topology diagram and session documentation.
+
+Notes:
+OPNsense installation and LAN configuration are complete, WAN is assigned to em1 and connected to VMware NAT, LAN is assigned to em0 on VMnet2, WAN currently has no IPv4 address, the DHCP lease file is empty, IPv4 DHCP Discover requests were captured on em1 without a visible Offer, the cause remains unresolved, do not mark WAN routing or firewall functionality as validated.
+
+
+- Working Story
+Building an isolated virtual network and installing an enterprise-style firewall, translating Network+ concepts into practical interface and subnet configuration, learning to distinguish link state from IP addressing and routing, using packet capture to investigate a real DHCP connectivity failure, identifying the importance of inventory-first engineering, documenting evidence and unresolved issues rather than claiming an unverified success.
+
+- Friction and AI Gaps
+WAN DHCP troubleshooting took longer than expected, initial infrastructure assumptions were not fully validated before configuration, the second virtual network adapter was initially attached to VMnet0 instead of VMnet2 and required correction, distinguishing IPv4 DHCP from DHCPv6 log activity required additional investigation, console scrollback and shell diagnostics added friction, the root cause of the missing WAN IPv4 lease remains unidentified.
+
+- What the AI Missed
+The initial workflow should have inventoried existing VMware networks, DHCP pools, gateway settings, service state, and adapter mappings before configuring OPNsense, troubleshooting repeated the same checks instead of moving to packet-level evidence sooner, the initial interface investigation did not distinguish DHCPv6 Solicit messages from IPv4 DHCP requests clearly enough, the DHCP pool was initially treated as a potential mismatch even though its range was valid for VMnet8, the cause of the missing WAN DHCP response was not established and must not be presented as a confirmed VMware service fault.
+
+- AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-11 15:08:23
+Reviewer Notes: OPNsense installation and LAN configuration are complete, WAN is assigned to em1 and connected to VMware NAT, LAN is assigned to em0 on VMnet2, WAN currently has no IPv4 address, the DHCP lease file is empty, IPv4 DHCP Discover requests were captured on em1 without a visible Offer, the cause remains unresolved, do not mark WAN routing or firewall functionality as validated.
+
+- Duration
+178 minutes (Planned: 60 minutes)
+
+- Notes
+VMnet2 is configured as Host-only with subnet 192.168.20.0/24 and VMware DHCP disabled, OPNsense LAN is 192.168.20.1/24, the intended OPNsense LAN DHCP pool is 192.168.20.100–192.168.20.199, VMnet8 is configured as NAT with subnet 192.168.148.0/24, VMware NAT gateway is 192.168.148.2, VMware DHCP pool is 192.168.148.128–192.168.148.254, VMware DHCP Service was reported running, WAN adapter settings were confirmed as NAT with Connected and Connect at power on enabled, WAN DHCP response path still requires investigation.
+### 2026-10-10 • 15:59
+- Summary
+Established Project 2 workspace at D:\Projects\Networking-Infrastructure-Engineering, initialized AutoDoc, installed GitHub CLI and authenticated with GitHub, created the public networking-infrastructure-engineering repository, configured the origin remote and main branch, pushed the initial AutoDoc project structure to GitHub, enabled AutoDoc automatic synchronization. Next: finalize README and CHANGELOG, set repository description, verify the initial commit and prepare for Project 2 Session 1.
+
+- Tasks Completed
+established repo
+
+- Notes
+
+
+---
+
+## Session – 15:58 to 16:00
+- Goal
+Establish the Project 2 GitHub repository, initialize AutoDoc, enable automatic Git synchronization, record repository creation, prepare the initial project documentation, establish a clean starting point for Session 1.
+
+- Definition of Done
+Public GitHub repository created, local Git repository connected to the remote, automatic sync enabled, AutoDoc creation session logged, README and CHANGELOG initialized, project description configured, initial changes committed and pushed, repository setup verified.
+
+- Goal Achieved
+✅ Yes
+
+Summary:
+Successfully established the Networking & Infrastructure Engineering project workspace, including the setup of the public GitHub repository and the initial integration of AutoDoc for documentation generation and synchronization.
+
+Tasks Completed:
+*   Created the Networking & Infrastructure Engineering project workspace.
+*   Initialized AutoDoc within the project.
+*   Installed GitHub CLI and completed authentication with GitHub.
+*   Created the public `networking-infrastructure-engineering` GitHub repository.
+*   Configured the `origin` remote and `main` branch for the repository.
+*   Pushed the initial AutoDoc project structure to the repository.
+*   Enabled automatic synchronization for documentation.
+*   Generated the first engineering log using AutoDoc.
+*   Committed the initial documentation changes to the repository.
+
+Issues Encountered:
+*   GitHub CLI was initially unavailable; resolved by refreshing the PowerShell session to update the system PATH after installation.
+*   Repository publishing via GitHub CLI was blocked until the CLI was fully installed and authenticated.
+*   The AutoDoc session status did not clearly confirm an active session, requiring manual verification.
+
+Next Steps:
+None
+
+Notes:
+None
+
+- Working Story
+None
+
+- Friction and AI Gaps
+GitHub CLI was initially unavailable, installation required refreshing the PowerShell session to update PATH, repository publishing was blocked until GitHub CLI was installed and authenticated, the AutoDoc session status did not clearly confirm the active session.
+
+- What the AI Missed
+None
+
+- AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-10 16:01:10
+Reviewer Notes: Repository creation and initial AutoDoc logging completed successfully, local commit d88f67c created, initial push to GitHub succeeded before the session log was generated, subsequent log commit push status remains unverified, README and CHANGELOG require review, GitHub repository description still needs to be configured.
+
+- Duration
+2 minutes (Planned: 5 minutes)
+
+- Notes
+
+
+## Screenshots and proof
+### Highlight: Activity_2026 10 11_142320
+![Activity_2026 10 11_142320](../screenshots/activity_2026-10-11_142320.jpg)
+This screenshot captures the most important project evidence for the current phase, showing the main state, artifact, or operational view being reviewed. It highlights the key detail the viewer should notice in this stage of the project.
+### Highlight: Activity_2026 10 11_140856
+![Activity_2026 10 11_140856](../screenshots/activity_2026-10-11_140856.jpg)
+This screenshot captures the most important project evidence for the current phase, showing the main state, artifact, or operational view being reviewed. It highlights the key detail the viewer should notice in this stage of the project.
+### Highlight: VMware DHCP Investigation
+![VMware DHCP Investigation](../screenshots/2026-10-12_043617_vmware-dhcp-investigation.png)
+This screenshot captures the most important project evidence for the current phase, showing the main state, artifact, or operational view being reviewed. It highlights the key detail the viewer should notice in this stage of the project.
+
+
+## Trials and tribulations
+### 2026-10-12 • 04:27 to 05:39
+### Goal
+Investigate and troubleshoot the missing IPv4 DHCP lease on the OPNsense WAN interface, identify the cause of the missing DHCP Offer if possible, restore upstream connectivity, validate the default route, document findings and remaining blockers.
+
+### Definition of Done
+Confirm the OPNsense WAN interface and VMware virtual network configuration, determine why DHCP Discover requests are not receiving a visible Offer or document the most likely fault boundary, obtain a WAN IPv4 lease and verify the default route if resolved, capture diagnostic evidence and record a reproducible troubleshooting handoff.
+
+### Goal Achieved
+❌ No
+
+Summary:
+This documentation outlines the initial phase of troubleshooting a persistent WAN DHCP failure experienced by an OPNsense virtual machine within a VMware environment. Despite a systematic approach to verifying both the OPNsense client's behavior and the VMware virtual network configuration, the issue remains unresolved. Limited visibility into the DHCP negotiation process has hindered fault isolation. Recognizing diminishing returns from further configuration checks, the focus is now shifting to evidence-based, packet-level analysis to pinpoint the root cause.
+
+Tasks Completed:
+*   Investigated the OPNsense WAN DHCP failure.
+*   Verified the OPNsense WAN interface (em1) configuration and confirmed repeated DHCP Discover transmissions.
+*   Confirmed the VMware VMnet8 NAT and DHCP configuration.
+*   Checked the operational status of the VMware DHCP and NAT services.
+*   Restarted the VMware DHCP service without restoring existing leases.
+*   Examined Windows DHCP event channels on the host.
+*   Reviewed VMware DHCP lease records for any relevant entries.
+*   Initiated a PCAP capture for subsequent Wireshark analysis.
+
+Issues Encountered:
+*   Repeated configuration checks did not succeed in isolating the fault.
+*   Limited visibility into whether the VMware DHCP server was receiving OPNsense DHCP broadcast messages.
+*   Initial host-side packet captures proved inconclusive in diagnosing the problem.
+*   The WAN DHCP failure for OPNsense persists.
+*   A tendency to repeat verification steps without establishing new observation points or distinguishing clearly between confirmed findings and assumptions.
+
+Next Steps:
+*   Perform a detailed Wireshark analysis of the captured PCAP file to thoroughly examine DHCP negotiation packets and identify communication breakdowns.
+*   Establish a more granular and effective observation point, potentially capturing traffic directly on the VMnet8 interface within the host, or within the guest VM itself (if feasible), to ensure visibility of DHCP Discover requests reaching the VMware DHCP server and its subsequent responses.
+*   Based on the packet-level analysis, systematically isolate the fault to either the OPNsense client, the VMware virtual network's routing/bridging, or the VMware DHCP service itself.
+
+Notes:
+
+### Working Story
+Systematic troubleshooting of a virtual networking failure, evidence-based fault isolation, verification of DHCP client behavior and virtual network configuration, recognition of diminishing returns and a plan to use packet-level analysis for the next diagnostic step
+
+### Friction and AI Gaps
+Repeated configuration checks without isolating the fault, limited visibility into whether VMware DHCP receives OPNsense broadcasts, inconclusive host-side packet captures, unresolved WAN DHCP failure
+
+### What the AI Missed
+Repeated checks of settings and service status already verified, insufficiently distinguished confirmed findings from assumptions, did not establish a new observation point before recommending further troubleshooting
+
+### AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-12 05:41:25
+Reviewer Notes: 
+
+### Duration
+72 minutes (Planned: 60 minutes)
+
+### Notes
+WAN DHCP failure remains unresolved, VMware VMnet8 configuration matches the intended subnet and gateway, existing VMware DHCP lease file contains only an old NS-DC01 lease, saved PCAP pending analysis in Wireshark
+### 2026-10-11 • 11:44 to 15:04
+### Goal
+Establish the baseline of the existing VMware homelab network, identify virtual network connections and IP addressing, examine routing and DNS behavior within the lab, identify one genuine networking issue or discrepancy, and establish the foundation for the segmented enterprise network.
+
+### Definition of Done
+Existing virtual network topology documented, NS-DC01 network configuration identified, IP addressing and routing understood, DNS resolution tested, connectivity between relevant lab systems assessed, one real issue investigated if present, findings and next steps documented.
+
+### Goal Achieved
+❌ No
+
+
+Summary:
+Installed and configured OPNsense 26.7 as the foundation for an isolated enterprise-style virtual network, established the LAN gateway at 192.168.20.1/24 and configured the DHCP pool for future lab clients, assigned WAN and LAN interfaces and verified VMware NAT addressing, investigated missing WAN IPv4 connectivity through interface inspection, routing-table analysis, DHCP lease inspection, and packet capture, identified repeated DHCP Discover requests without a visible DHCP Offer, documented the unresolved WAN DHCP issue and established a targeted troubleshooting plan for the next session.
+
+Tasks Completed:
+Installed OPNsense 26.7 on a dedicated virtual machine, configured WAN and LAN interface assignments, created the isolated VMnet2 network using 192.168.20.0/24, assigned the LAN gateway 192.168.20.1/24, configured the LAN DHCP pool from 192.168.20.100 to 192.168.20.199, verified VMware VMnet8 NAT subnet and gateway settings, inspected VMware DHCP pool configuration and service status, inspected OPNsense interface status and routing tables, examined DHCP lease state, captured WAN IPv4 DHCP traffic with tcpdump, identified repeated DHCP Discover requests without a visible DHCP Offer, documented the unresolved WAN connectivity issue and next troubleshooting steps.
+
+Issues Encountered:
+WAN failed to obtain an IPv4 address through DHCP despite the virtual interface reporting an active link, repeated DHCP Discover requests were captured without a visible DHCP Offer, the WAN DHCP lease file was empty, the default IPv4 route was absent, the LAN virtual adapter was initially attached to VMnet0 instead of the intended VMnet2 and required correction, initial troubleshooting was slowed by incomplete inventory of the existing virtual network configuration, DHCPv6 log messages initially complicated interpretation of the IPv4 DHCP issue, Gemini AI generation encountered a temporary 503 service availability error and required manual documentation.
+
+Next Steps:
+Inventory and validate the existing VMware virtual network configuration before making further changes, investigate why OPNsense WAN (`em1`) sends IPv4 DHCP Discover requests without receiving a visible DHCP Offer, verify VMware NAT and DHCP service behavior, obtain a valid WAN IPv4 lease and confirm the default route, test upstream connectivity, verify OPNsense LAN gateway and DHCP functionality on VMnet2, connect a test client to the isolated lab subnet, validate permitted and blocked traffic through the firewall, capture screenshots and packet evidence at key milestones, document troubleshooting findings and configuration decisions, finalize the network topology diagram and session documentation.
+
+Notes:
+OPNsense installation and LAN configuration are complete, WAN is assigned to em1 and connected to VMware NAT, LAN is assigned to em0 on VMnet2, WAN currently has no IPv4 address, the DHCP lease file is empty, IPv4 DHCP Discover requests were captured on em1 without a visible Offer, the cause remains unresolved, do not mark WAN routing or firewall functionality as validated.
+
+
+### Working Story
+Building an isolated virtual network and installing an enterprise-style firewall, translating Network+ concepts into practical interface and subnet configuration, learning to distinguish link state from IP addressing and routing, using packet capture to investigate a real DHCP connectivity failure, identifying the importance of inventory-first engineering, documenting evidence and unresolved issues rather than claiming an unverified success.
+
+### Friction and AI Gaps
+WAN DHCP troubleshooting took longer than expected, initial infrastructure assumptions were not fully validated before configuration, the second virtual network adapter was initially attached to VMnet0 instead of VMnet2 and required correction, distinguishing IPv4 DHCP from DHCPv6 log activity required additional investigation, console scrollback and shell diagnostics added friction, the root cause of the missing WAN IPv4 lease remains unidentified.
+
+### What the AI Missed
+The initial workflow should have inventoried existing VMware networks, DHCP pools, gateway settings, service state, and adapter mappings before configuring OPNsense, troubleshooting repeated the same checks instead of moving to packet-level evidence sooner, the initial interface investigation did not distinguish DHCPv6 Solicit messages from IPv4 DHCP requests clearly enough, the DHCP pool was initially treated as a potential mismatch even though its range was valid for VMnet8, the cause of the missing WAN DHCP response was not established and must not be presented as a confirmed VMware service fault.
+
+### AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-11 15:08:23
+Reviewer Notes: OPNsense installation and LAN configuration are complete, WAN is assigned to em1 and connected to VMware NAT, LAN is assigned to em0 on VMnet2, WAN currently has no IPv4 address, the DHCP lease file is empty, IPv4 DHCP Discover requests were captured on em1 without a visible Offer, the cause remains unresolved, do not mark WAN routing or firewall functionality as validated.
+
+### Duration
+178 minutes (Planned: 60 minutes)
+
+### Notes
+VMnet2 is configured as Host-only with subnet 192.168.20.0/24 and VMware DHCP disabled, OPNsense LAN is 192.168.20.1/24, the intended OPNsense LAN DHCP pool is 192.168.20.100–192.168.20.199, VMnet8 is configured as NAT with subnet 192.168.148.0/24, VMware NAT gateway is 192.168.148.2, VMware DHCP pool is 192.168.148.128–192.168.148.254, VMware DHCP Service was reported running, WAN adapter settings were confirmed as NAT with Connected and Connect at power on enabled, WAN DHCP response path still requires investigation.
+### 2026-10-10 • 15:59
+### Summary
+Established Project 2 workspace at D:\Projects\Networking-Infrastructure-Engineering, initialized AutoDoc, installed GitHub CLI and authenticated with GitHub, created the public networking-infrastructure-engineering repository, configured the origin remote and main branch, pushed the initial AutoDoc project structure to GitHub, enabled AutoDoc automatic synchronization. Next: finalize README and CHANGELOG, set repository description, verify the initial commit and prepare for Project 2 Session 1.
+
+### Tasks Completed
+established repo
+
+### Notes
+
+
+---
+
+## Session – 15:58 to 16:00
+### Goal
+Establish the Project 2 GitHub repository, initialize AutoDoc, enable automatic Git synchronization, record repository creation, prepare the initial project documentation, establish a clean starting point for Session 1.
+
+### Definition of Done
+Public GitHub repository created, local Git repository connected to the remote, automatic sync enabled, AutoDoc creation session logged, README and CHANGELOG initialized, project description configured, initial changes committed and pushed, repository setup verified.
+
+### Goal Achieved
+✅ Yes
+
+Summary:
+Successfully established the Networking & Infrastructure Engineering project workspace, including the setup of the public GitHub repository and the initial integration of AutoDoc for documentation generation and synchronization.
+
+Tasks Completed:
+*   Created the Networking & Infrastructure Engineering project workspace.
+*   Initialized AutoDoc within the project.
+*   Installed GitHub CLI and completed authentication with GitHub.
+*   Created the public `networking-infrastructure-engineering` GitHub repository.
+*   Configured the `origin` remote and `main` branch for the repository.
+*   Pushed the initial AutoDoc project structure to the repository.
+*   Enabled automatic synchronization for documentation.
+*   Generated the first engineering log using AutoDoc.
+*   Committed the initial documentation changes to the repository.
+
+Issues Encountered:
+*   GitHub CLI was initially unavailable; resolved by refreshing the PowerShell session to update the system PATH after installation.
+*   Repository publishing via GitHub CLI was blocked until the CLI was fully installed and authenticated.
+*   The AutoDoc session status did not clearly confirm an active session, requiring manual verification.
+
+Next Steps:
+None
+
+Notes:
+None
+
+### Working Story
+None
+
+### Friction and AI Gaps
+GitHub CLI was initially unavailable, installation required refreshing the PowerShell session to update PATH, repository publishing was blocked until GitHub CLI was installed and authenticated, the AutoDoc session status did not clearly confirm the active session.
+
+### What the AI Missed
+None
+
+### AI Peer Review
+Status: Approved
+Reviewer: human
+Reviewed At: 2026-10-10 16:01:10
+Reviewer Notes: Repository creation and initial AutoDoc logging completed successfully, local commit d88f67c created, initial push to GitHub succeeded before the session log was generated, subsequent log commit push status remains unverified, README and CHANGELOG require review, GitHub repository description still needs to be configured.
+
+### Duration
+2 minutes (Planned: 5 minutes)
+
+### Notes
+
+
+## Lessons learned
+- Keep documentation close to delivery.
+- Use screenshots as proof points.
+- Write the project story in plain language for future reviewers.
+
+## Next steps
+- Continue from the handoff notes and current project status.
+- Capture final cleanup or deployment follow-up items as they are completed.
+
+
+---
+
+# Networking-Infrastructure-Engineering
+
+Status: In progress
+
+## Project story
 This project is currently **In progress**.
 
 ---
