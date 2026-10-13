@@ -1,3 +1,3 @@
 {
-  "where_left_off": "WAN em1 is repeatedly transmitting DHCP Discover packets without an observed DHCP Offer, /tmp/wan-dhcp.pcap was being captured on em1 and must be finalized with Ctrl+C before transfer to Windows, next session should analyze the PCAP and choose the next diagnostic test based on its contents"
+  "where_left_off": "OPNsense WAN is em0 on VMnet8 with DHCP address 192.168.148.129/24, LAN is em1 on VMnet2 at 192.168.20.1/24, default route is 192.168.148.2, VMware NAT gateway connectivity is verified, external IP connectivity is verified, DNS resolution for example.com is verified through 127.0.0.1. Next objective is to connect a Windows client to VMnet2 and validate its DHCP lease, gateway, DNS configuration, and permitted connectivity before implementing and testing firewall segmentation rules."
 }
