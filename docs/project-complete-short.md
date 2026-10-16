@@ -3,43 +3,46 @@
 Status: In progress
 
 ## Project story
-This summary outlines the current progress and key insights from the ongoing 'Networking-Infrastructure-Engineering' project.
+Here is a concise project summary for 'Networking-Infrastructure-Engineering', with an 'In progress' status.
 
 ---
 
-# Networking-Infrastructure-Engineering: Project Summary
+# Networking-Infrastructure-Engineering Project Summary
 
-## 1. Project Story
+## 1. Project story
 
-This 'Networking-Infrastructure-Engineering' project is currently in progress, focused on establishing a robust and verifiable network foundation using OPNsense within a VMware virtualized environment. The initial phase successfully addressed critical connectivity challenges, specifically resolving an incorrect virtual network adapter mapping that prevented the OPNsense firewall from obtaining WAN access. By systematically auditing and correcting the VMware-to-OPNsense interface assignments, a stable WAN DHCP lease was secured, routing was validated, and both external IP connectivity and DNS resolution were confirmed. This foundational work establishes a critical baseline for subsequent network implementation phases, ensuring a reproducible and functional environment.
+This 'Networking-Infrastructure-Engineering' project is actively building a robust, virtualized network lab centered around an OPNsense firewall. Currently in progress, the work involves establishing foundational network connectivity, resolving critical infrastructure conflicts, and validating core services to support a segregated lab environment. Initial efforts focused on bringing OPNsense WAN online, followed by detailed troubleshooting and configuration of the LAN segment to prepare for client integration. The project is systematically addressing network architecture challenges to ensure a stable and functional base for further development.
 
-## 2. Key Achievements
+## 2. Key achievements
 
-*   **Resolved Core Connectivity Issues:** Successfully identified and rectified an incorrect OPNsense WAN/LAN interface mapping within the VMware environment, which was the root cause of initial network failures.
-*   **Established WAN Functionality:** Achieved successful WAN DHCP lease acquisition, verified the default gateway, and confirmed full external IP connectivity.
-*   **Validated Core Network Services:** Confirmed robust DNS resolution for external domains through the local resolver.
-*   **Documented Topology:** Created a documented network topology plan, providing a clear reference for the current state and future expansion.
-*   **Systematic Troubleshooting Applied:** Demonstrated effective infrastructure troubleshooting methodology by correlating virtual adapter MAC addresses with OPNsense interfaces to isolate the problem.
+*   **OPNsense WAN Operationalization:** Successfully configured OPNsense for dynamic WAN connectivity (DHCP), validated its default route, external reachability, and DNS resolution capabilities.
+*   **Critical IP Conflict Resolution:** Identified and rectified a significant IP address conflict between the OPNsense LAN interface (192.168.20.1/24) and the Windows host's VMnet2 adapter by reconfiguring the host's adapter to 192.168.20.2/24.
+*   **Restored Firewall Management Access:** Re-established essential HTTPS management connectivity to the OPNsense web interface from the physical Windows host post-conflict resolution.
+*   **Core Network Verification:** Confirmed OPNsense interface assignments (WAN: `em0` at 192.168.148.129/24; LAN: `em1` at 192.168.20.1/24), validated its routing table, and confirmed the HTTPS service is actively listening on the LAN interface.
+*   **Preservation of Existing Infrastructure:** Ensured no alterations were made to existing domain controller configurations or unrelated firewall rules, maintaining environment stability during critical network changes.
 
-## 3. Lessons Learned
+## 3. Lessons learned
 
-*   **Prioritize Topology Validation:** The paramount importance of conducting a comprehensive network topology audit, including correlating virtual network adapter assignments (e.g., VMware vNICs to OPNsense `emX` interfaces and their MAC addresses), *before* troubleshooting service-specific issues like DHCP.
-*   **Systematic Approach:** Adopting a systematic infrastructure troubleshooting methodology is crucial to avoid premature assumptions and inefficient diagnostic efforts.
-*   **Session Management:** The need for stricter time boundaries and clear stopping criteria for troubleshooting sessions to enhance efficiency and prevent fatigue from prolonged, less focused efforts.
+*   **Systematic Diagnostic Importance:** Highlighted the absolute necessity of systematic, layered troubleshooting and thorough verification of all virtual network components and firewall settings in complex virtual environments.
+*   **Host-VM Network Synergy:** Emphasized that host-level virtual network adapter configurations are just as critical as guest VM settings, particularly for preventing IP conflicts and ensuring proper network segregation.
+*   **Focused Troubleshooting Strategy:** Gained experience in differentiating and isolating issues originating from the host network versus those within the virtualized firewall configuration, streamlining diagnostic efforts.
+*   **Phased Validation in Complex Systems:** Reinforced the value of a phased approach to validation, acknowledging that comprehensive testing (e.g., DHCP functionality) may span multiple sessions due to underlying issues or time constraints.
 
-## 4. Next Steps
+## 4. Next steps
 
-*   Proceed with the subsequent phases of OPNsense configuration and broader network implementation, building upon the now-verified and stable network foundation.
-*   Integrate lessons learned regarding session management by implementing stricter time boundaries and earlier stopping criteria for future troubleshooting and development activities.
+The immediate priority is to validate DHCP functionality on the OPNsense LAN interface. Following this, future steps will include:
 
-## 5. Proof Points
+*   Identifying or creating a dedicated Windows client VM and integrating it into the VMnet2 lab network.
+*   Validating DHCP lease assignment, default gateway, and DNS configuration from the client VM's perspective.
+*   Testing LAN gateway reachability, firewall policy effectiveness, and external connectivity from the client.
+*   Capturing final evidence of successful client integration and overall network functionality.
 
-*   **WAN DHCP Success:** Screenshot `2026-10-13_142955_wan-dhcp-success.png` confirms the successful acquisition of a WAN DHCP lease (`192.168.148.129/24`).
-*   **Validated Default Route:** Screenshot `2026-10-13_143146_wan-default-route-validated.png` confirms the default route via `192.168.148.2`, with successful gateway reachability (4/4 replies).
-*   **Current Network Topology:** Screenshot `2026-10-13_143619_network-topology-plan-current.png` depicts the documented network topology.
-*   **External Connectivity:** Screenshot `2026-10-13_143905_wan-external-connectivity.png` demonstrates successful external IP connectivity to `1.1.1.1` (4/4 replies).
-*   **DNS Resolution:** Screenshot `2026-10-13_144046_wan-dns-resolution.png` validates successful DNS resolution for `example.com`.
-*   **Interface Correction:** Resolution achieved by reassigning OPNsense WAN interface to `em0` on `VMnet8` and LAN interface to `em1` on `VMnet2`, based on MAC address correlation.
+## 5. Proof points
+
+*   **Detailed Engineering Log (2026-10-16):** Provides comprehensive documentation of the IP conflict's identification, systematic resolution steps, and subsequent successful HTTPS management connectivity verification from the host.
+*   **AI Peer Review Confirmation (2026-10-16):** Offers independent verification of OPNsense interface status, default route presence, HTTPS service listener, the Windows host's VMnet2 IP address change, and successful TCP connectivity to the OPNsense LAN management interface (192.168.20.1:443).
+*   **Initial WAN Setup Screenshots (2026-10-13):** Captions like "WAN DHCP Success", "WAN Default Route Validated", "WAN External Connectivity", and "WAN DNS Resolution" visibly demonstrate the successful initial configuration and validation of OPNsense's external network connectivity.
+*   **Network Topology Plan Screenshot (2026-10-13):** "Network Topology Plan (Current)" illustrates ongoing architectural planning and design for the environment.
 
 ## What we shipped
 - The project was completed with a clear objective, technical execution, and proof captured in the logs.

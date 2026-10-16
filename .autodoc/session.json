@@ -1,0 +1,11 @@
+{
+  "start_time": "2026-10-16 05:24:30",
+  "goal": "Connect a Windows client to the isolated VMnet2 lab network, validate DHCP addressing and default gateway assignment, test LAN gateway reachability, record DNS configuration and identify any remaining client connectivity issues.",
+  "definition_of_done": "Windows client connected to VMnet2, DHCP lease and subnet verified, default gateway confirmed as 192.168.20.1, DNS configuration recorded, gateway connectivity tested, results and limitations documented, next technical action identified.",
+  "dependencies": "OPNsense VM must remain available, VMware Adapter 2 must remain connected to VMnet2, OPNsense LAN must remain assigned to em1 at 192.168.20.1/24, DHCP service and pool 192.168.20.100\u2013192.168.20.199 must be available, Windows client VM must be identified before changing its network adapter, existing domain controller NS-DC01 must remain untouched.",
+  "tech_context": "VMware Workstation, OPNsense 26.7, firewall VM FW-OPNsense01, WAN em0 on VMnet8 with DHCP address 192.168.148.129/24, LAN em1 on VMnet2 at 192.168.20.1/24, VMware NAT gateway 192.168.148.2, intended client subnet 192.168.20.0/24, Windows client VM to be identified, repository branch main.",
+  "timeboxing_minutes": 60,
+  "passive_capture": false,
+  "passive_interval": 30,
+  "paused_seconds": 0
+}
