@@ -310,3 +310,63 @@ The physical Windows host can reach the OPNsense web interface at https://192.16
 
 ---
 
+## Session – 2026-10-20
+
+### Status: In progress
+
+### Session summary
+### Work completed
+Accessed the OPNsense 26.7 web interface through the host-only LAN network, verified the LAN interface at 192.168.20.1/24 and host adapter at 192.168.20.2/24, inspected Kea DHCPv4 settings and confirmed the service was initially disabled with no interface selected, inspected the subnet configuration and found zero existing subnet entries, created a LAN subnet entry for 192.168.20.0/24 with the address pool 192.168.20.100–192.168.20.199, selected LAN as the Kea DHCPv4 service interface, checked the service Enabled option.
+
+### AI-reviewed session summary
+Summary:
+Initial configuration of the Kea DHCPv4 service on OPNsense 26.7 was performed, including verification of network interfaces and creation of a DHCP subnet with an address pool for the LAN network.
+
+Tasks Completed:
+1.  Accessed the OPNsense 26.7 web interface through the host-only LAN network.
+2.  Verified the LAN interface (192.168.20.1/24) and host adapter (192.168.20.2/24) network configurations.
+3.  Inspected Kea DHCPv4 settings, confirming the service was initially disabled with no interface selected.
+4.  Inspected subnet configuration, finding zero existing subnet entries.
+5.  Created a LAN subnet entry for 192.168.20.0/24 with the address pool 192.168.20.100–192.168.20.199.
+6.  Selected the LAN interface for the Kea DHCPv4 service.
+7.  Checked the service 'Enabled' option for Kea DHCPv4.
+
+Issues Encountered:
+1.  The existing DHCP configuration was incomplete upon inspection.
+2.  Required identification of the correct Kea DHCPv4 settings and subnet configuration pages within the OPNsense interface.
+3.  Limited session time prevented applying the configuration and validating service operation.
+
+Next Steps:
+1.  Apply the configured Kea DHCPv4 settings.
+2.  Validate the operation of the DHCPv4 service on the LAN interface by testing client IP address assignments.
+
+Notes:
+The work focused on the foundational setup of Kea DHCPv4 to provide IP addresses within the 192.168.20.0/24 network segment. The host-only network configuration was essential for initial access and verification.
+
+### Session details
+**Session time:** 2026-10-20, 05:57 to 06:07
+
+**Goal:** Verify the existing OPNsense LAN DHCP configuration and record its current state.
+
+**Goal achieved:** No
+
+**Duration:** 10 minutes (planned: 20 minutes)
+
+**Working story:** None
+
+**Friction or blockers:** Existing DHCP configuration was incomplete, the correct Kea DHCPv4 settings and subnet pages needed to be identified, limited session time prevented applying the configuration and validating service operation.
+
+**AI gaps:** None
+
+**AI peer review:** Approved by human at 2026-10-20 06:08:27
+
+**Reviewer notes:** The OPNsense WAN interface remains em0 at 192.168.148.129/24, the LAN interface remains em1 at 192.168.20.1/24, the physical Windows host's VMnet2 adapter is 192.168.20.2/24, VMnet2 remains host-only on 192.168.20.0/24. The Kea DHCPv4 subnet entry was created with pool 192.168.20.100–192.168.20.199. The latest screenshot shows LAN selected and the main service Enabled checkbox checked, but the Apply button is still present. Application of these service settings and successful DHCP operation are not yet verified.
+
+### Notes
+No extra notes recorded.
+
+### Where we left off
+On Services → Kea DHCP → Kea DHCPv4 → Settings, LAN is selected and the main service Enabled checkbox is checked. The next step is to click Apply, confirm whether OPNsense accepts the configuration and starts the service, inspect any validation errors, then verify the subnet entry persists and confirm DHCP operation before proceeding to client testing. Do not claim a successful lease until a client actually obtains one.
+
+---
+
