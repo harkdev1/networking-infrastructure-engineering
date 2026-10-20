@@ -370,3 +370,65 @@ On Services → Kea DHCP → Kea DHCPv4 → Settings, LAN is selected and the ma
 
 ---
 
+## Session – 2026-10-20
+
+### Status: In progress
+
+### Session summary
+### Work completed
+Created WIN11-CLIENT01 in VMware Workstation, configured 4 GB RAM and 2 vCPUs, allocated a 64 GB virtual disk, connected the client to VMnet2 Host-only, installed Windows 11, assigned the hostname WIN11-CLIENT01, preserved the existing Windows Server domain controller and OPNsense network configuration.
+
+### AI-reviewed session summary
+Summary:
+A new Windows 11 client endpoint, `WIN11-CLIENT01`, has been successfully deployed and configured within the lab environment. This expansion provides a dedicated client for comprehensive network and security testing, establishing the foundation for validating DHCP address assignment, gateway connectivity, and preparing for future firewall policy validation and packet analysis. The existing Windows Server domain controller and OPNsense network configuration were preserved without modification.
+
+Tasks Completed:
+*   Created a new virtual machine named `WIN11-CLIENT01` in VMware Workstation.
+*   Configured virtual hardware for `WIN11-CLIENT01`:
+    *   RAM: 4 GB
+    *   vCPUs: 2
+    *   Virtual Disk: 64 GB
+*   Connected the `WIN11-CLIENT01` virtual machine to the `VMnet2` (Host-only) network.
+*   Installed the Windows 11 operating system on `WIN11-CLIENT01`.
+*   Assigned the hostname `WIN11-CLIENT01` to the newly installed client.
+*   Confirmed that the existing Windows Server domain controller and OPNsense network configuration were preserved and unaffected by the new client deployment.
+
+Issues Encountered:
+*   None.
+
+Next Steps:
+*   Test DHCP address assignment for `WIN11-CLIENT01`.
+*   Validate gateway connectivity from `WIN11-CLIENT01`.
+*   Utilize `WIN11-CLIENT01` for firewall policy validation.
+*   Conduct packet analysis involving traffic from `WIN11-CLIENT01`.
+
+Notes:
+*   The addition of `WIN11-CLIENT01` significantly enhances the lab's capability to simulate real-world client interactions for network and security testing scenarios.
+
+### Session details
+**Session time:** 2026-10-20, 16:26 to 17:18
+
+**Goal:** Apply and verify the existing OPNsense Kea DHCPv4 LAN configuration.
+
+**Goal achieved:** Yes
+
+**Duration:** 52 minutes (planned: 30 minutes)
+
+**Working story:** Expanded the lab with a dedicated Windows client endpoint, established the foundation for testing DHCP address assignment and gateway connectivity, preserved the existing domain controller, prepared the environment for firewall policy validation and packet analysis.
+
+**Friction or blockers:** None
+
+**AI gaps:** None
+
+**AI peer review:** Approved by human at 2026-10-20 17:20:17
+
+**Reviewer notes:** The client VM exists and Windows 11 installation completed, the VM is configured for VMnet2 Host-only, the DHCP pool is configured on OPNsense but a client lease has not been confirmed, routing and DNS from the Windows client remain unverified, firewall segmentation testing remains outstanding.
+
+### Notes
+Windows client configuration is incomplete, no DHCP lease evidence collected, no client-side connectivity tests performed, continue with the existing lab topology without moving the domain controller or adding another network adapter.
+
+### Where we left off
+WIN11-CLIENT01 is at the Windows 11 initial setup and sign-in stage, complete account configuration using an available local-account option if offered, reach the desktop, open PowerShell, run ipconfig /all, verify an address in 192.168.20.100–192.168.20.199 and gateway 192.168.20.1, troubleshoot DHCP if no valid lease appears, then test gateway reachability and DNS.
+
+---
+
