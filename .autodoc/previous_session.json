@@ -1,3 +1,3 @@
 {
-  "where_left_off": "At OPNsense Firewall \u2192 Rules, with the default LAN IPv4 and IPv6 pass rules visible. The next session should focus on creating and validating a controlled firewall rule for the intended segmentation test. Do not remove the existing rules until the replacement behavior and management access are planned. The Windows 11 client is ready for further testing."
+  "where_left_off": "The OPNsense SERVERS interface has been assigned to em2 and configured with the intended static address 192.168.10.1/24, the VMware adapter is mapped to VMnet1. Next, connect a test endpoint to VMnet1, verify connectivity to the firewall, implement a safe and explicit inter-network policy, validate allowed and blocked traffic, then capture focused packet evidence and complete project documentation."
 }
