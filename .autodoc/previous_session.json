@@ -1,3 +1,3 @@
 {
-  "where_left_off": "On Services \u2192 Kea DHCP \u2192 Kea DHCPv4 \u2192 Settings, LAN is selected and the main service Enabled checkbox is checked. The next step is to click Apply, confirm whether OPNsense accepts the configuration and starts the service, inspect any validation errors, then verify the subnet entry persists and confirm DHCP operation before proceeding to client testing. Do not claim a successful lease until a client actually obtains one."
+  "where_left_off": "WIN11-CLIENT01 is at the Windows 11 initial setup and sign-in stage, complete account configuration using an available local-account option if offered, reach the desktop, open PowerShell, run ipconfig /all, verify an address in 192.168.20.100\u2013192.168.20.199 and gateway 192.168.20.1, troubleshoot DHCP if no valid lease appears, then test gateway reachability and DNS."
 }
