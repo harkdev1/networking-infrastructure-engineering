@@ -1,3 +1,3 @@
 {
-  "where_left_off": "WIN11-CLIENT01 is at the Windows 11 initial setup and sign-in stage, complete account configuration using an available local-account option if offered, reach the desktop, open PowerShell, run ipconfig /all, verify an address in 192.168.20.100\u2013192.168.20.199 and gateway 192.168.20.1, troubleshoot DHCP if no valid lease appears, then test gateway reachability and DNS."
+  "where_left_off": "At OPNsense Firewall \u2192 Rules, with the default LAN IPv4 and IPv6 pass rules visible. The next session should focus on creating and validating a controlled firewall rule for the intended segmentation test. Do not remove the existing rules until the replacement behavior and management access are planned. The Windows 11 client is ready for further testing."
 }
