@@ -1,0 +1,11 @@
+{
+  "start_time": "2026-10-25 08:45:48",
+  "goal": "Confirm whether the existing OPNsense SERVERS interface at 192.168.10.1/24 can communicate with a test endpoint on VMnet1, then capture the result.",
+  "definition_of_done": "A test endpoint obtains or is assigned an appropriate address on 192.168.10.0/24, the endpoint can reach 192.168.10.1, and the result is recorded. If testing is blocked, document the exact blocker after one targeted troubleshooting attempt.",
+  "dependencies": "VMware Workstation, FW-OPNsense01, the existing VMnet1 network, a separate test endpoint. Do not move or reconfigure NS-DC01. Avoid adding a second NIC to the existing Windows client for this test.",
+  "tech_context": "Hypervisor: VMware Workstation, firewall: OPNsense 26.7, interface: em2 / SERVERS, subnet: 192.168.10.0/24, gateway target: 192.168.10.1. The interface has been configured, but endpoint-to-interface connectivity has not yet been verified.",
+  "timeboxing_minutes": 60,
+  "passive_capture": false,
+  "passive_interval": 30,
+  "paused_seconds": 0
+}
