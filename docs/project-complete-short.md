@@ -3,53 +3,55 @@
 Status: In progress
 
 ## Project story
-Here is a concise project summary for 'Networking-Infrastructure-Engineering':
+This project is a critical initiative in establishing a robust and secure foundational network environment.
 
 ---
 
-# Networking-Infrastructure-Engineering: Project Summary
+### 1. Project story
 
-## 1. Project Story
+This ongoing project focuses on architecting and implementing a robust networking infrastructure powered by OPNsense, including the integration of dedicated WAN, LAN, and a new SERVERS subnet. The core work involves configuring network interfaces, establishing secure endpoint-to-gateway connectivity across subnets, and rigorously validating firewall enforcement policies. While foundational components have been successfully deployed and initial validation demonstrated, the project is currently addressing a critical stability challenge where network connectivity does not reliably recover after temporary firewall rule modifications. This phase is dedicated to diagnosing and resolving these state management issues to ensure a resilient and secure network environment for future services.
 
-The "Networking-Infrastructure-Engineering" project is actively establishing a robust and secure virtual network environment, leveraging OPNsense as a central firewall and router. Our initial phase successfully focused on deploying foundational network services, demonstrating reliable client endpoint connectivity, DHCP allocation, and validated internet access. We then progressed to configuring additional network segments and rigorously testing granular firewall enforcement. This ongoing work has not only proven our capability to build critical infrastructure but has also illuminated a key challenge in advanced firewall rule management, specifically around rule cleanup and state persistence, which we are actively investigating to fortify operational resilience and security.
+### 2. Key achievements
 
-## 2. Key Achievements
+*   **Multi-Interface OPNsense Deployment:** Successfully configured and validated OPNsense with distinct WAN, LAN, and a newly integrated SERVERS (192.168.10.1/24) virtual network interface.
+*   **Verified Endpoint Connectivity:** Demonstrated reliable endpoint-to-gateway communication from test clients on both LAN and the SERVERS subnet, confirming basic network reachability.
+*   **Granular Firewall Enforcement:** Validated the capability to implement targeted ICMP blocking rules, with evidence of traffic being successfully blocked and recorded in firewall logs.
+*   **Comprehensive Client Validation Framework:** Established a methodical approach to client validation, encompassing gateway connectivity, outbound internet access, DNS resolution, and HTTPS reachability across different network segments.
+*   **Initial Documentation Foundation:** Developed foundational project documentation, including network addressing schemas, preliminary firewall rule behavior summaries, and a PowerShell script for automated network validation.
 
-*   **Core Network Services Established:** Successfully deployed and configured OPNsense to provide essential network services, including DHCPv4, for client endpoints on a dedicated LAN segment, ensuring seamless network integration and outbound connectivity.
-*   **Initial Network Segmentation:** Configured and validated an additional virtual network interface (SERVERS) on OPNsense, laying the groundwork for secure, isolated server environments and enabling more granular traffic control.
-*   **Granular Firewall Enforcement Demonstrated:** Verified the ability to implement precise firewall rules by creating, applying, and confirming specific traffic blocking (e.g., ICMP) through real-time log analysis, validating secure boundary controls.
-*   **Critical Operational Insight Gained:** Proactively identified and documented a significant challenge where network connectivity did not consistently restore after the removal of temporary firewall rules, providing a crucial learning opportunity for refining firewall state management and cleanup procedures.
+### 3. Lessons learned
 
-## 3. Lessons Learned
+*   **Complexity of Firewall State Management:** Removal of temporary firewall rules does not automatically guarantee immediate restoration of connectivity. This highlights the critical need for rigorous verification of firewall state, rule application, and explicit state table cleanup.
+*   **Importance of Post-Rule-Removal Validation:** It is crucial to explicitly confirm full connectivity restoration after any firewall rule modification, even if the rule is designed to be temporary. Our definition of done will now explicitly include this step for future changes.
+*   **Thorough Documentation Throughout:** The extensive need for detailed documentation (network addressing, firewall behavior, validation results, limitations) underscores its indispensable role in complex network projects, especially when troubleshooting unexpected behavior.
+*   **Careful Scoping & Environment Control:** Challenges like initial validation occurring on the host PC (instead of the intended VM) and misinterpretation of PowerShell output emphasize the need for strict test environment control and precise interpretation of diagnostic tools.
 
-*   **Firewall Rule Lifecycle Complexity:** We've learned that effective firewall management extends beyond initial rule creation to include meticulous cleanup and state table persistence. Thorough post-removal connectivity validation is as critical as post-application verification.
-*   **Importance of Comprehensive Testing:** This project has underscored the necessity of robust testing for both expected (allowed) and restricted (blocked) traffic flows, particularly after rule modifications, to ensure predictable and secure network behavior.
-*   **Proactive Problem Identification:** Methodical, step-by-step testing is vital for uncovering potential operational inconsistencies, such as firewall state issues, early in the development process, thereby preventing more significant challenges in later stages.
+### 4. Next steps
 
-## 4. Next Steps
+*   **Investigate Firewall State Anomaly:** Conduct a deep dive into the OPNsense firewall's persistent state (`pfctl -sr`, `pfctl -si`) to precisely diagnose why connectivity did not restore after temporary rule removal.
+*   **Develop Robust Firewall Cleanup Procedures:** Define and document a reliable process for ensuring proper firewall rule cleanup and consistent application of configurations, potentially leveraging OPNsense's lifecycle management features.
+*   **Re-validate SERVERS Subnet Connectivity:** Once firewall state issues are resolved, rigorously re-establish and confirm stable endpoint-to-gateway connectivity for the SERVERS subnet, verifying full restoration.
+*   **Finalize Validation and Documentation:** Complete any remaining validation steps and refine project documentation, including the network topology, IP scheme, and firewall policy summary, ensuring it accurately reflects the resolved and stable state of the network.
 
-*   **Deep Dive into Firewall State:** Conduct a focused investigation into OPNsense's firewall state management mechanisms (e.g., `pfctl` diagnostics) to fully understand and resolve the observed connectivity restoration issue.
-*   **Standardize Firewall Rule Operations:** Develop and document robust, repeatable procedures for the consistent application, modification, and removal of firewall rules, ensuring proper state cleanup and network service continuity.
-*   **Advance Network Segmentation & Security:** Continue to build out and secure additional network segments, implementing sophisticated firewall policies to control inter-segment traffic and enhance the overall security posture of the infrastructure.
+### 5. Proof points
 
-## 5. Proof Points
-
-*   **Initial Client and Core Connectivity:**
-    *   `WIN11-CLIENT Installation Complete` (Screenshot)
-    *   `Win11 Client01 Single LAN DHCP Verified` (Screenshot)
-    *   `Win11 Client01 Outbound Connectivity Test` (Screenshot)
-    *   `OPNsense LAN DHCP Subnet` (Screenshot)
-    *   `OPNsense Kea DHCP Service Status (Active)` (Screenshot)
-    *   Engineering Log: `2026-10-22` Session Summary and Tasks Completed
-*   **Advanced Firewall Configuration and Enforcement:**
-    *   `OPNsense LAN Firewall Rules Baseline` (Screenshot)
-    *   `Servers Firewall Log` (Screenshot)
-    *   `Server Firewall Block Rule (Test)` (Screenshot)
-    *   `OPNsense ICMP Block Log Evidence` (Screenshot)
-    *   `OPNsense Firewall Test Results` (Screenshot)
-    *   Engineering Log: `2026-10-25` Session Summary and Tasks Completed
-
----
+*   **Screenshot:** `Servers Firewall Log`
+*   **Screenshot:** `Server Firewall Block Rule (Test)`
+*   **Screenshot:** `Lan-Validation`
+*   **Screenshot:** `WIN11-CLIENT Installation Complete`
+*   **Screenshot:** `Win11 Client01 Single LAN DHCP Verified`
+*   **Screenshot:** `Win11 Client01 Outbound Connectivity Test`
+*   **Screenshot:** `OPNSense LAN Firewall Rules Baseline`
+*   **Screenshot:** `OPNsense ICMP Block Log Evidence`
+*   **Screenshot:** `OPNsense Firewall Test Results`
+*   **Screenshot:** `OPNSense LAN DHCP Subnet`
+*   **Log Entry:** "Validated the OPNsense SERVERS virtual network interface configuration at 192.168.10.1/24."
+*   **Log Entry:** "Confirmed successful endpoint-to-gateway connectivity from WIN11-CLIENT01 to OPNsense via ICMP, receiving 4/4 successful replies."
+*   **Log Entry:** "Confirmed that traffic was successfully blocked and recorded in the OPNsense firewall logs during the rule's active period."
+*   **Log Entry:** "Configured and validated OPNsense WAN, LAN, and SERVERS interfaces."
+*   **Log Entry:** "Verified the additional SERVERS subnet and tested gateway reachability."
+*   **Log Entry:** "Validated Windows client gateway connectivity and outbound access."
+*   **Log Entry:** "Confirmed DNS resolution and HTTPS connectivity for client systems."
 
 ## What we shipped
 - The project was completed with a clear objective, technical execution, and proof captured in the logs.

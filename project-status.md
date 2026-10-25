@@ -600,3 +600,75 @@ Resolve any pending OPNsense firewall changes, confirm the temporary rule is rem
 
 ---
 
+## Session – 2026-10-25
+
+### Status: In progress
+
+### Session summary
+### Work completed
+Configured and validated the OPNsense WAN, LAN, and SERVERS interfaces, verified the additional SERVERS subnet and tested gateway reachability, demonstrated targeted ICMP blocking and confirmed blocked traffic in firewall logs, validated Windows client gateway connectivity and outbound access, confirmed DNS resolution and HTTPS connectivity, documented network addressing and firewall behavior, created validation results and limitations documentation, prepared a PowerShell network validation script, captured LAN validation evidence, updated the network topology artifact.
+
+### AI-reviewed session summary
+Summary:
+This task involved the configuration and validation of OPNsense WAN, LAN, and SERVERS interfaces, including the integration of a new SERVERS subnet and verification of gateway reachability. Targeted ICMP blocking was successfully demonstrated and logged. Comprehensive client validation was performed, confirming gateway connectivity, outbound access, DNS resolution, and HTTPS connectivity. All pertinent documentation, including network addressing, firewall behavior, validation results, limitations, and network topology, was updated. A PowerShell network validation script was also prepared. However, significant issues were encountered, most notably the unexpected failure of SERVERS subnet connectivity to recover after removal of a temporary ICMP block rule, and the subsequent unverified state of post-cleanup gateway connectivity. Other challenges included an accidental initial validation on the host PC, misinterpretation of PowerShell output, and an extended documentation and repository review process.
+
+Tasks Completed:
+*   Configured and validated OPNsense WAN, LAN, and SERVERS interfaces.
+*   Verified the additional SERVERS subnet and tested gateway reachability.
+*   Demonstrated targeted ICMP blocking and confirmed blocked traffic in firewall logs.
+*   Validated Windows client gateway connectivity and outbound access.
+*   Confirmed DNS resolution and HTTPS connectivity for client systems.
+*   Documented network addressing and firewall rule behavior.
+*   Created validation results and limitations documentation.
+*   Prepared a PowerShell network validation script.
+*   Captured LAN validation evidence.
+*   Updated the network topology artifact.
+
+Issues Encountered:
+*   Connectivity for the SERVERS subnet did not recover as expected after removal of a temporary ICMP block rule.
+*   Post-cleanup gateway connectivity remains unverified across affected interfaces.
+*   Initial validation attempts were accidentally performed on the host PC rather than the designated Windows client VM.
+*   PowerShell script output was initially misinterpreted, requiring additional analysis to correctly interpret results.
+*   The final documentation and repository review process took longer than originally estimated.
+
+Next Steps:
+*   Investigate and resolve the SERVERS subnet connectivity issue that arose after the temporary ICMP block rule removal.
+*   Perform comprehensive verification of gateway connectivity for all interfaces post-cleanup.
+*   Review and refine the PowerShell network validation script to improve clarity and prevent future misinterpretations.
+
+Notes:
+*   No AI-related issues or inaccuracies were identified during this task.
+*   **Key points of emphasis from this work include:**
+    *   The unexpected failure of SERVERS subnet connectivity to recover after removal of a temporary ICMP block rule.
+    *   The current unverified state of post-cleanup gateway connectivity.
+    *   The initial validation error of running checks on the host PC instead of the client VM.
+    *   The initial misinterpretation of PowerShell output, highlighting a need for careful review.
+    *   The extended duration required for final documentation and repository review.
+
+### Session details
+**Session time:** 2026-10-25, 17:27 to 18:21
+
+**Goal:** Finish the Networking & Infrastructure MVP, restore the normal client network configuration, finalize validation evidence and documentation, prepare the project for final review.
+
+**Goal achieved:** Yes
+
+**Duration:** 31 minutes (planned: 60 minutes)
+
+**Working story:** Connectivity did not recover as expected after removal of the temporary SERVERS ICMP block rule, post-cleanup gateway connectivity remains unverified, initial validation was accidentally run on the host PC rather than the Windows client VM, PowerShell output was initially misinterpreted, final documentation and repository review took longer than expected.
+
+**Friction or blockers:** Connectivity did not recover as expected after removal of the temporary SERVERS ICMP block rule, post-cleanup gateway connectivity remains unverified, initial validation was accidentally run on the host PC rather than the Windows client VM, PowerShell output was initially misinterpreted, final documentation and repository review took longer than expected.
+
+**AI gaps:** None
+
+**AI peer review:** Approved by human at 2026-10-25 18:23:05
+
+**Reviewer notes:** The MVP demonstrates foundational networking, routing, firewall configuration, connectivity testing, and evidence-based troubleshooting. The strongest confirmed results are successful LAN gateway reachability, public IP connectivity, DNS resolution, HTTPS connectivity, and observed firewall blocking during temporary rule tests. Do not claim complete LAN-to-SERVERS isolation or confirmed restoration of SERVERS gateway connectivity after removal of the temporary rule.
+
+### Notes
+The existing Windows Server domain controller was preserved on VMnet8. The Windows client was used as a temporary test endpoint on SERVERS during the firewall test and was subsequently validated on LAN. Confirm its final VMware adapter assignment before treating the lab as fully restored.
+
+### Where we left off
+The documentation files are prepared, the topology replacement network-topology.png exists, and LAN validation evidence has been captured. The PowerShell validation script is saved in the project root. The Git working tree contains the new documentation and script, the new topology image, the LAN validation screenshot, session metadata changes, a session log update, and the deletion of the old mermaid-diagram.png. The remote is origin, the branch is main, and the branch was up to date before these changes. Next steps: finish the final staged-file review, confirm only intended project artifacts are included, commit and push the project, verify the push succeeded, clear Windows clipboard history.
+
+---
+

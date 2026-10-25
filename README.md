@@ -5,104 +5,118 @@
 ## Status: In progress
 
 ## Project summary
-Here is a concise project summary for 'Networking-Infrastructure-Engineering':
+This project is a critical initiative in establishing a robust and secure foundational network environment.
 
 ---
 
-# Networking-Infrastructure-Engineering: Project Summary
+### 1. Project story
 
-## 1. Project Story
+This ongoing project focuses on architecting and implementing a robust networking infrastructure powered by OPNsense, including the integration of dedicated WAN, LAN, and a new SERVERS subnet. The core work involves configuring network interfaces, establishing secure endpoint-to-gateway connectivity across subnets, and rigorously validating firewall enforcement policies. While foundational components have been successfully deployed and initial validation demonstrated, the project is currently addressing a critical stability challenge where network connectivity does not reliably recover after temporary firewall rule modifications. This phase is dedicated to diagnosing and resolving these state management issues to ensure a resilient and secure network environment for future services.
 
-The "Networking-Infrastructure-Engineering" project is actively establishing a robust and secure virtual network environment, leveraging OPNsense as a central firewall and router. Our initial phase successfully focused on deploying foundational network services, demonstrating reliable client endpoint connectivity, DHCP allocation, and validated internet access. We then progressed to configuring additional network segments and rigorously testing granular firewall enforcement. This ongoing work has not only proven our capability to build critical infrastructure but has also illuminated a key challenge in advanced firewall rule management, specifically around rule cleanup and state persistence, which we are actively investigating to fortify operational resilience and security.
+### 2. Key achievements
 
-## 2. Key Achievements
+*   **Multi-Interface OPNsense Deployment:** Successfully configured and validated OPNsense with distinct WAN, LAN, and a newly integrated SERVERS (192.168.10.1/24) virtual network interface.
+*   **Verified Endpoint Connectivity:** Demonstrated reliable endpoint-to-gateway communication from test clients on both LAN and the SERVERS subnet, confirming basic network reachability.
+*   **Granular Firewall Enforcement:** Validated the capability to implement targeted ICMP blocking rules, with evidence of traffic being successfully blocked and recorded in firewall logs.
+*   **Comprehensive Client Validation Framework:** Established a methodical approach to client validation, encompassing gateway connectivity, outbound internet access, DNS resolution, and HTTPS reachability across different network segments.
+*   **Initial Documentation Foundation:** Developed foundational project documentation, including network addressing schemas, preliminary firewall rule behavior summaries, and a PowerShell script for automated network validation.
 
-*   **Core Network Services Established:** Successfully deployed and configured OPNsense to provide essential network services, including DHCPv4, for client endpoints on a dedicated LAN segment, ensuring seamless network integration and outbound connectivity.
-*   **Initial Network Segmentation:** Configured and validated an additional virtual network interface (SERVERS) on OPNsense, laying the groundwork for secure, isolated server environments and enabling more granular traffic control.
-*   **Granular Firewall Enforcement Demonstrated:** Verified the ability to implement precise firewall rules by creating, applying, and confirming specific traffic blocking (e.g., ICMP) through real-time log analysis, validating secure boundary controls.
-*   **Critical Operational Insight Gained:** Proactively identified and documented a significant challenge where network connectivity did not consistently restore after the removal of temporary firewall rules, providing a crucial learning opportunity for refining firewall state management and cleanup procedures.
+### 3. Lessons learned
 
-## 3. Lessons Learned
+*   **Complexity of Firewall State Management:** Removal of temporary firewall rules does not automatically guarantee immediate restoration of connectivity. This highlights the critical need for rigorous verification of firewall state, rule application, and explicit state table cleanup.
+*   **Importance of Post-Rule-Removal Validation:** It is crucial to explicitly confirm full connectivity restoration after any firewall rule modification, even if the rule is designed to be temporary. Our definition of done will now explicitly include this step for future changes.
+*   **Thorough Documentation Throughout:** The extensive need for detailed documentation (network addressing, firewall behavior, validation results, limitations) underscores its indispensable role in complex network projects, especially when troubleshooting unexpected behavior.
+*   **Careful Scoping & Environment Control:** Challenges like initial validation occurring on the host PC (instead of the intended VM) and misinterpretation of PowerShell output emphasize the need for strict test environment control and precise interpretation of diagnostic tools.
 
-*   **Firewall Rule Lifecycle Complexity:** We've learned that effective firewall management extends beyond initial rule creation to include meticulous cleanup and state table persistence. Thorough post-removal connectivity validation is as critical as post-application verification.
-*   **Importance of Comprehensive Testing:** This project has underscored the necessity of robust testing for both expected (allowed) and restricted (blocked) traffic flows, particularly after rule modifications, to ensure predictable and secure network behavior.
-*   **Proactive Problem Identification:** Methodical, step-by-step testing is vital for uncovering potential operational inconsistencies, such as firewall state issues, early in the development process, thereby preventing more significant challenges in later stages.
+### 4. Next steps
 
-## 4. Next Steps
+*   **Investigate Firewall State Anomaly:** Conduct a deep dive into the OPNsense firewall's persistent state (`pfctl -sr`, `pfctl -si`) to precisely diagnose why connectivity did not restore after temporary rule removal.
+*   **Develop Robust Firewall Cleanup Procedures:** Define and document a reliable process for ensuring proper firewall rule cleanup and consistent application of configurations, potentially leveraging OPNsense's lifecycle management features.
+*   **Re-validate SERVERS Subnet Connectivity:** Once firewall state issues are resolved, rigorously re-establish and confirm stable endpoint-to-gateway connectivity for the SERVERS subnet, verifying full restoration.
+*   **Finalize Validation and Documentation:** Complete any remaining validation steps and refine project documentation, including the network topology, IP scheme, and firewall policy summary, ensuring it accurately reflects the resolved and stable state of the network.
 
-*   **Deep Dive into Firewall State:** Conduct a focused investigation into OPNsense's firewall state management mechanisms (e.g., `pfctl` diagnostics) to fully understand and resolve the observed connectivity restoration issue.
-*   **Standardize Firewall Rule Operations:** Develop and document robust, repeatable procedures for the consistent application, modification, and removal of firewall rules, ensuring proper state cleanup and network service continuity.
-*   **Advance Network Segmentation & Security:** Continue to build out and secure additional network segments, implementing sophisticated firewall policies to control inter-segment traffic and enhance the overall security posture of the infrastructure.
+### 5. Proof points
 
-## 5. Proof Points
-
-*   **Initial Client and Core Connectivity:**
-    *   `WIN11-CLIENT Installation Complete` (Screenshot)
-    *   `Win11 Client01 Single LAN DHCP Verified` (Screenshot)
-    *   `Win11 Client01 Outbound Connectivity Test` (Screenshot)
-    *   `OPNsense LAN DHCP Subnet` (Screenshot)
-    *   `OPNsense Kea DHCP Service Status (Active)` (Screenshot)
-    *   Engineering Log: `2026-10-22` Session Summary and Tasks Completed
-*   **Advanced Firewall Configuration and Enforcement:**
-    *   `OPNsense LAN Firewall Rules Baseline` (Screenshot)
-    *   `Servers Firewall Log` (Screenshot)
-    *   `Server Firewall Block Rule (Test)` (Screenshot)
-    *   `OPNsense ICMP Block Log Evidence` (Screenshot)
-    *   `OPNsense Firewall Test Results` (Screenshot)
-    *   Engineering Log: `2026-10-25` Session Summary and Tasks Completed
-
----
+*   **Screenshot:** `Servers Firewall Log`
+*   **Screenshot:** `Server Firewall Block Rule (Test)`
+*   **Screenshot:** `Lan-Validation`
+*   **Screenshot:** `WIN11-CLIENT Installation Complete`
+*   **Screenshot:** `Win11 Client01 Single LAN DHCP Verified`
+*   **Screenshot:** `Win11 Client01 Outbound Connectivity Test`
+*   **Screenshot:** `OPNSense LAN Firewall Rules Baseline`
+*   **Screenshot:** `OPNsense ICMP Block Log Evidence`
+*   **Screenshot:** `OPNsense Firewall Test Results`
+*   **Screenshot:** `OPNSense LAN DHCP Subnet`
+*   **Log Entry:** "Validated the OPNsense SERVERS virtual network interface configuration at 192.168.10.1/24."
+*   **Log Entry:** "Confirmed successful endpoint-to-gateway connectivity from WIN11-CLIENT01 to OPNsense via ICMP, receiving 4/4 successful replies."
+*   **Log Entry:** "Confirmed that traffic was successfully blocked and recorded in the OPNsense firewall logs during the rule's active period."
+*   **Log Entry:** "Configured and validated OPNsense WAN, LAN, and SERVERS interfaces."
+*   **Log Entry:** "Verified the additional SERVERS subnet and tested gateway reachability."
+*   **Log Entry:** "Validated Windows client gateway connectivity and outbound access."
+*   **Log Entry:** "Confirmed DNS resolution and HTTPS connectivity for client systems."
 
 ## Latest session
 ### Work completed
-Validated OPNsense SERVERS interface at 192.168.10.1/24, connected WIN11-CLIENT01 to VMnet1 as a temporary test endpoint, confirmed gateway reachability with 4/4 successful ICMP replies, created and tested a temporary ICMP block rule, confirmed blocked traffic in OPNsense firewall logs
+Configured and validated the OPNsense WAN, LAN, and SERVERS interfaces, verified the additional SERVERS subnet and tested gateway reachability, demonstrated targeted ICMP blocking and confirmed blocked traffic in firewall logs, validated Windows client gateway connectivity and outbound access, confirmed DNS resolution and HTTPS connectivity, documented network addressing and firewall behavior, created validation results and limitations documentation, prepared a PowerShell network validation script, captured LAN validation evidence, updated the network topology artifact.
 
 ### AI-reviewed session summary
 Summary:
-An additional virtual network interface was configured on OPNsense, and endpoint-to-gateway connectivity was successfully demonstrated. Firewall enforcement was verified by creating and testing a temporary ICMP block rule, with traffic confirmation in live logs. However, an issue was identified where connectivity did not recover after the temporary firewall rule was removed, indicating a potential firewall cleanup problem requiring follow-up investigation.
+This task involved the configuration and validation of OPNsense WAN, LAN, and SERVERS interfaces, including the integration of a new SERVERS subnet and verification of gateway reachability. Targeted ICMP blocking was successfully demonstrated and logged. Comprehensive client validation was performed, confirming gateway connectivity, outbound access, DNS resolution, and HTTPS connectivity. All pertinent documentation, including network addressing, firewall behavior, validation results, limitations, and network topology, was updated. A PowerShell network validation script was also prepared. However, significant issues were encountered, most notably the unexpected failure of SERVERS subnet connectivity to recover after removal of a temporary ICMP block rule, and the subsequent unverified state of post-cleanup gateway connectivity. Other challenges included an accidental initial validation on the host PC, misinterpretation of PowerShell output, and an extended documentation and repository review process.
 
 Tasks Completed:
-*   Validated the OPNsense SERVERS virtual network interface configuration at 192.168.10.1/24.
-*   Connected WIN11-CLIENT01 to VMnet1, establishing it as a temporary test endpoint.
-*   Confirmed successful endpoint-to-gateway connectivity from WIN11-CLIENT01 to OPNsense via ICMP, receiving 4/4 successful replies.
-*   Created and tested a temporary ICMP block rule on OPNsense to deny ping traffic.
-*   Confirmed that traffic was successfully blocked and recorded in the OPNsense firewall logs during the rule's active period.
+*   Configured and validated OPNsense WAN, LAN, and SERVERS interfaces.
+*   Verified the additional SERVERS subnet and tested gateway reachability.
+*   Demonstrated targeted ICMP blocking and confirmed blocked traffic in firewall logs.
+*   Validated Windows client gateway connectivity and outbound access.
+*   Confirmed DNS resolution and HTTPS connectivity for client systems.
+*   Documented network addressing and firewall rule behavior.
+*   Created validation results and limitations documentation.
+*   Prepared a PowerShell network validation script.
+*   Captured LAN validation evidence.
+*   Updated the network topology artifact.
 
 Issues Encountered:
-*   Connectivity from WIN11-CLIENT01 to the OPNsense gateway did not recover after the temporary ICMP block rule was removed.
-*   Repeated ping tests did not resolve the connectivity loss.
-*   It is suspected that firewall changes may have remained pending or unapplied, even after rule removal, preventing the restoration of network connectivity.
+*   Connectivity for the SERVERS subnet did not recover as expected after removal of a temporary ICMP block rule.
+*   Post-cleanup gateway connectivity remains unverified across affected interfaces.
+*   Initial validation attempts were accidentally performed on the host PC rather than the designated Windows client VM.
+*   PowerShell script output was initially misinterpreted, requiring additional analysis to correctly interpret results.
+*   The final documentation and repository review process took longer than originally estimated.
 
 Next Steps:
-*   Investigate the OPNsense firewall's state to determine why connectivity did not restore after rule removal (e.g., check `pfctl -sr` and `pfctl -si` for persistent rules or state table issues).
-*   Attempt to manually reapply firewall rules or restart the firewall service to clear any stuck or unapplied configurations.
-*   Re-establish and confirm endpoint-to-gateway connectivity from WIN11-CLIENT01.
-*   Document procedures for ensuring proper firewall rule cleanup and application consistency on OPNsense.
+*   Investigate and resolve the SERVERS subnet connectivity issue that arose after the temporary ICMP block rule removal.
+*   Perform comprehensive verification of gateway connectivity for all interfaces post-cleanup.
+*   Review and refine the PowerShell network validation script to improve clarity and prevent future misinterpretations.
 
 Notes:
-None.
+*   No AI-related issues or inaccuracies were identified during this task.
+*   **Key points of emphasis from this work include:**
+    *   The unexpected failure of SERVERS subnet connectivity to recover after removal of a temporary ICMP block rule.
+    *   The current unverified state of post-cleanup gateway connectivity.
+    *   The initial validation error of running checks on the host PC instead of the client VM.
+    *   The initial misinterpretation of PowerShell output, highlighting a need for careful review.
+    *   The extended duration required for final documentation and repository review.
 
-**Session time:** 2026-10-25, 08:45 to 09:14
+**Session time:** 2026-10-25, 17:27 to 18:21
 
-**Goal:** Confirm whether the existing OPNsense SERVERS interface at 192.168.10.1/24 can communicate with a test endpoint on VMnet1, then capture the result.
+**Goal:** Finish the Networking & Infrastructure MVP, restore the normal client network configuration, finalize validation evidence and documentation, prepare the project for final review.
 
 **Goal achieved:** Yes
 
-**Duration:** 29 minutes (planned: 60 minutes)
+**Duration:** 31 minutes (planned: 60 minutes)
 
-**Working story:** Configured an additional virtual network interface, demonstrated endpoint-to-gateway connectivity, verified firewall enforcement using live logs, identified a firewall cleanup issue requiring follow-up
+**Working story:** Connectivity did not recover as expected after removal of the temporary SERVERS ICMP block rule, post-cleanup gateway connectivity remains unverified, initial validation was accidentally run on the host PC rather than the Windows client VM, PowerShell output was initially misinterpreted, final documentation and repository review took longer than expected.
 
-**Friction or blockers:** Connectivity did not recover after the temporary firewall rule was removed, firewall changes may have remained pending, repeated ping tests did not resolve the issue
+**Friction or blockers:** Connectivity did not recover as expected after removal of the temporary SERVERS ICMP block rule, post-cleanup gateway connectivity remains unverified, initial validation was accidentally run on the host PC rather than the Windows client VM, PowerShell output was initially misinterpreted, final documentation and repository review took longer than expected.
 
 **AI gaps:** None
 
-**AI peer review:** Approved by human at 2026-10-25 09:15:53
+**AI peer review:** Approved by human at 2026-10-25 18:23:05
 
-**Reviewer notes:** The SERVERS interface is assigned to em2 on VMnet1 with address 192.168.10.1/24. The temporary endpoint used 192.168.10.128/24. Gateway reachability was demonstrated successfully, and the temporary ICMP block was confirmed in firewall logs. The visible rules list no longer showed the temporary block, but connectivity restoration was not confirmed. Do not claim complete subnet isolation or successful final firewall cleanup.
+**Reviewer notes:** The MVP demonstrates foundational networking, routing, firewall configuration, connectivity testing, and evidence-based troubleshooting. The strongest confirmed results are successful LAN gateway reachability, public IP connectivity, DNS resolution, HTTPS connectivity, and observed firewall blocking during temporary rule tests. Do not claim complete LAN-to-SERVERS isolation or confirmed restoration of SERVERS gateway connectivity after removal of the temporary rule.
 
-**Notes:** None.
+**Notes:** The existing Windows Server domain controller was preserved on VMnet8. The Windows client was used as a temporary test endpoint on SERVERS during the firewall test and was subsequently validated on LAN. Confirm its final VMware adapter assignment before treating the lab as fully restored.
 
-**Handoff:** Resolve any pending OPNsense firewall changes, confirm the temporary rule is removed, verify SERVERS gateway reachability once, restore WIN11-CLIENT01 to VMnet2, complete the remaining MVP documentation and final review.
+**Handoff:** The documentation files are prepared, the topology replacement network-topology.png exists, and LAN validation evidence has been captured. The PowerShell validation script is saved in the project root. The Git working tree contains the new documentation and script, the new topology image, the LAN validation screenshot, session metadata changes, a session log update, and the deletion of the old mermaid-diagram.png. The remote is origin, the branch is main, and the branch was up to date before these changes. Next steps: finish the final staged-file review, confirm only intended project artifacts are included, commit and push the project, verify the push succeeded, clear Windows clipboard history.
 
 <!-- autodoc:project-snapshot:end -->
 
